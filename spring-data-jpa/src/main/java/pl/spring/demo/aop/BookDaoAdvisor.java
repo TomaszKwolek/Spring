@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.exception.BookNotNullIdException;
@@ -26,8 +27,9 @@ public class BookDaoAdvisor {
     @Autowired
     private BookDao bookDao;
     
-	@Before("execution(* pl.spring.demo.dao.impl.BookDaoImpl.save(..))")
-	public void before(JoinPoint joinPoint) {
+	//@Before("execution(* pl.spring.demo.dao.impl.BookDaoImpl.save(..))")
+    @Before("@annotation(nullableId)")
+	public void before(JoinPoint joinPoint, NullableId nullableId) {
 		Object[] bookArgs = joinPoint.getArgs();
 		BookTo book = (BookTo) bookArgs[0];
 		checkNotNullId(bookArgs[0]);
