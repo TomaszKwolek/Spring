@@ -2,11 +2,14 @@ package pl.spring.demo.dao.impl;
 
 import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.aop.BookDaoAdvisor;
+import pl.spring.demo.aop.ItemsCollection;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.IdAware;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Component
-public class BookDaoImpl implements BookDao {
+public class BookDaoImpl implements BookDao, ItemsCollection {
 
 	
     private final Set<BookTo> ALL_BOOKS = new HashSet<>();
@@ -50,6 +53,11 @@ public class BookDaoImpl implements BookDao {
         return book;
     }
 
+	@Override
+	public Collection<? extends IdAware> getAllItems() {
+		return ALL_BOOKS;
+	}
+    
     public void setSequence(Sequence sequence) {
         this.sequence = sequence;
     }
