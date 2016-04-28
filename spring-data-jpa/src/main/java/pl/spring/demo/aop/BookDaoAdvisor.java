@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.dao.Dao;
 import pl.spring.demo.dao.impl.BookDaoImpl;
 import pl.spring.demo.exception.BookNotNullIdException;
 import pl.spring.demo.to.BookTo;
@@ -26,18 +27,19 @@ public class BookDaoAdvisor {
 
 	@Autowired
 	private Sequence sequence;
+	
+	private Dao<?> dao;
 
-	@Autowired
-	private ItemsCollection<?> itemsCollection;
 
+	@SuppressWarnings("unchecked")
 	@Before("@annotation(nullableId)")
 	public void before(JoinPoint joinPoint, NullableId nullableId) {
 		IdAware item = (IdAware)joinPoint.getArgs()[0];
 		checkNotNullId(item);
+		dao = (Dao<? extends IdAware>) joinPoint.getThis();
 		
-		Collection<? extends IdAware> allItems = itemsCollection.getAllItems();
+		Collection<? extends IdAware> allItems = dao.findAll();
 		setId(item, allItems);
-
 	}
 
 	 private void setId(IdAware item, Collection<? extends IdAware> allItems){
