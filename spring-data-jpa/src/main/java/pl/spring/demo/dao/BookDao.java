@@ -1,13 +1,13 @@
 package pl.spring.demo.dao;
 
-import pl.spring.demo.to.BookTo;
-
 import java.util.List;
 
-public interface BookDao extends Dao<BookTo>{
+import pl.spring.demo.entity.BookEntity;
 
-    List<BookTo> findBookByTitle(String title);
+public interface BookDao extends Dao<BookEntity> {
 
-    List<BookTo> findBooksByAuthor(String author);
+    List<BookEntity> findBookByTitle(String title);
+
+    List<BookEntity> findBooksByAuthor(String author);
     
 }

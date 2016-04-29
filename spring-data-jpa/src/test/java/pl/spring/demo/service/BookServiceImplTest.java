@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.exception.BookNotNullIdException;
+import pl.spring.demo.mapper.Mapper;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
@@ -20,6 +23,9 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = "CommonServiceTest-context.xml")
 public class BookServiceImplTest {
 
+	@Autowired
+	private Mapper maper;
+	
     @Autowired
     private BookService bookService;
     @Autowired
@@ -66,11 +72,11 @@ public class BookServiceImplTest {
     @Test
     public void testShouldSaveNewBook() {
         // given
-        BookTo book = new BookTo(null, "NewTitle", "NewAuthor");
-        BookTo book2 = new BookTo(null, "NewTitle2", "NewAuthor2");
+        BookEntity book = new BookEntity(null, "NewTitle", "New Autohor");
+        BookEntity book2 = new BookEntity(null, "NewTitle2", "New Author2");
         // when
-        BookTo result = bookService.saveBook(book);
-        BookTo result2 = bookService.saveBook(book2);
+        BookTo result = bookService.saveBook(maper.mapToBookTo(book));
+        BookTo result2 = bookService.saveBook(maper.mapToBookTo(book2));
         // then
         assertEquals(7L, result.getId().longValue());
         assertEquals(8L, result2.getId().longValue());

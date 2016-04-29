@@ -2,12 +2,12 @@ package pl.spring.demo.dao;
 
 import java.util.List;
 
-import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.IdAware;
 
-public interface Dao<T> {
+public interface Dao<T extends IdAware> {
 
-    List<BookTo> findAll();
+    List<T> findAll();
 
-    BookTo save(BookTo book);
+    T save(T book);
 	
 }

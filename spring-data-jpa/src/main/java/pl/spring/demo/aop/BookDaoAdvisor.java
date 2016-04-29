@@ -30,7 +30,6 @@ public class BookDaoAdvisor {
 	
 	private Dao<?> dao;
 
-
 	@SuppressWarnings("unchecked")
 	@Before("@annotation(nullableId)")
 	public void before(JoinPoint joinPoint, NullableId nullableId) {
@@ -38,7 +37,7 @@ public class BookDaoAdvisor {
 		checkNotNullId(item);
 		dao = (Dao<? extends IdAware>) joinPoint.getThis();
 		
-		Collection<? extends IdAware> allItems = dao.findAll();
+		Collection<? extends IdAware> allItems = (Collection<? extends IdAware>) dao.findAll();
 		setId(item, allItems);
 	}
 
