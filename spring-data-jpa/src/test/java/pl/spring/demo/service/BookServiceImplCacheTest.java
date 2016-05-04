@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.List;
 
+import org.aspectj.weaver.NewFieldTypeMunger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,40 +16,42 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.dao.impl.BookDaoImpl;
 import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.mapper.Mapper;
+import pl.spring.demo.service.impl.BookServiceImpl;
 import pl.spring.demo.to.BookTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"CommonServiceTest-context.xml", "BookServiceImplCacheTest-context.xml"})
+@ContextConfiguration(locations = { "CommonServiceTest-context.xml", "BookServiceImplCacheTest-context.xml" })
 public class BookServiceImplCacheTest {
 
 	@Autowired
-	Mapper maper;
-    @Autowired
-    private BookService bookService;
-    @Autowired
-    private BookDao bookDao;
-    @Autowired
-    private CacheManager cacheManager;
+	private Mapper maper;
+	@Autowired
+	private BookService bookService;
+	@Autowired
+	private BookDao bookDao;
+	@Autowired
+	private CacheManager cacheManager;
 
-    @Before
-    public void setUp() {
-        cacheManager.getCache("booksCache").clear();
-    }
+	@Before
+	public void setUp() {
+		cacheManager.getCache("booksCache").clear();
+	}
 
-    @Test
-    public void testShouldFindAllBooksFirstFromDaoThenFromCache() {
-        // when
-        Mockito.when(bookDao.findAll()).thenReturn(Arrays.asList((new BookEntity(1L, "Title", "Author"))));
+	@Test
+	public void testShouldFindAllBooksFirstFromDaoThenFromCache() {
+		// when
+		Mockito.when(bookDao.findAll()).thenReturn(Arrays.asList((new BookEntity(1L, "Title", "Author"))));
 
-        List<BookTo> allBooks = bookService.findAllBooks();
-        assertEquals(1, allBooks.size());
+		List<BookTo> allBooks = bookService.findAllBooks();
+		assertEquals(1, allBooks.size());
 
-        allBooks = bookService.findAllBooks();
-        assertEquals(1, allBooks.size());
-        // then
-        Mockito.verify(bookDao, Mockito.times(1)).findAll();
-    }
-    
+		allBooks = bookService.findAllBooks();
+		assertEquals(1, allBooks.size());
+		// then
+		Mockito.verify(bookDao, Mockito.times(1)).findAll();
+	}
+
 }

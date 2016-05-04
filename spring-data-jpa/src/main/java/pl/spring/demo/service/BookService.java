@@ -1,5 +1,7 @@
 package pl.spring.demo.service;
 
+import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.mapper.Mapper;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
@@ -11,4 +13,5 @@ public interface BookService {
     List<BookTo> findBooksByAuthor(String author);
 
     BookTo saveBook(BookTo book);
+
 }

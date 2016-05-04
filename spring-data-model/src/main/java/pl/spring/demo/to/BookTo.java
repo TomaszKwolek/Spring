@@ -44,4 +44,5 @@ public class BookTo implements IdAware {
     public void setAuthors(List<AuthorTo> authors) {
         this.authors = authors;
     }
+
 }

@@ -15,6 +15,8 @@ import pl.spring.demo.to.IdAware;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 @Component
 public class BookServiceImpl implements BookService {
 
@@ -22,8 +24,9 @@ public class BookServiceImpl implements BookService {
 	private Mapper mapper;
 	
 	@Autowired
-    private BookDao bookDao;
-	
+    private BookDao  bookDao;
+
+
 	@Override
     @Cacheable("booksCache")
     public List<BookTo> findAllBooks() {
@@ -49,7 +52,4 @@ public class BookServiceImpl implements BookService {
         return bookTo;
     }
 
-    public void setBookDao(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }
 }
