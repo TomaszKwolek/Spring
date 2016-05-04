@@ -27,7 +27,6 @@ public class BookDaoAdvisor {
     @Autowired
     private BookDao bookDao;
     
-	//@Before("execution(* pl.spring.demo.dao.impl.BookDaoImpl.save(..))")
     @Before("@annotation(nullableId)")
 	public void before(JoinPoint joinPoint, NullableId nullableId) {
 		Object[] bookArgs = joinPoint.getArgs();
