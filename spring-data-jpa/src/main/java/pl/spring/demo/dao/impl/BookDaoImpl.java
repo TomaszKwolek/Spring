@@ -1,25 +1,20 @@
 package pl.spring.demo.dao.impl;
 
 import pl.spring.demo.annotation.NullableId;
-import pl.spring.demo.aop.BookDaoAdvisor;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.entity.BookEntity;
-import pl.spring.demo.to.BookTo;
-import pl.spring.demo.to.IdAware;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class BookDaoImpl implements BookDao {
 
 	private final Set<BookEntity> ALL_BOOKS = new HashSet<>();

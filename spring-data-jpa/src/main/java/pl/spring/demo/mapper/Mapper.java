@@ -14,6 +14,10 @@ import pl.spring.demo.to.BookTo;
 @Service
 public class Mapper {
 
+	/**
+	 * @param Book entity
+	 * @return Book to
+	 */
 	public BookTo mapToBookTo(BookEntity bookEntity) {
 		if (bookEntity != null) {
 			return new BookTo(bookEntity.getId(), bookEntity.getTitle(), mapAuthorsToTo(bookEntity));
@@ -21,6 +25,10 @@ public class Mapper {
 		return null;
 	}
 
+	/**
+	 * @param book to
+	 * @return book entity
+	 */
 	public BookEntity mapToBookEntity(BookTo bookTo) {
 		if (bookTo != null) {
 			return new BookEntity(bookTo.getId(), bookTo.getTitle(), mapAuthorsToEntity(bookTo));
@@ -28,6 +36,10 @@ public class Mapper {
 		return null;
 	}
 
+	/**
+	 * @param list of books entities
+	 * @return list of books tos
+	 */
 	public List<BookTo> mapToTos(List<BookEntity> bookEntities) {
 		List<BookTo> tos = new ArrayList<>();
 		for (BookEntity book : bookEntities) {
@@ -36,6 +48,10 @@ public class Mapper {
 		return tos;
 	}
 
+	/**
+	 * @param list of books tos
+	 * @return list of books entities
+	 */
 	public List<BookEntity> mapToEntities(List<BookTo> bookTos) {
 		List<BookEntity> entities = new ArrayList<>();
 		for (BookTo book : bookTos) {

@@ -148,13 +148,26 @@ public class BookServiceImplTest {
 	
 	@Test
 	@DirtiesContext
+	public void testShouldFindOneBookBySecondAuthor() {
+		// given
+		BookEntity book = new BookEntity(null, "Java Podstawy","Murat Yener Alex Theedom");
+		// when
+		bookService.saveBook(maper.mapToBookTo(book));
+		List<BookTo> foundAllBooks = bookService.findBooksByAuthor("Theedom");
+		List<Long> ids = createIdsList(foundAllBooks);
+		// then
+		assertEquals(1, foundAllBooks.size());
+		assertEquals(7L, ids.get(0).longValue());
+	}
+	
+	@Test
+	@DirtiesContext
 	public void testShouldFindNoBookForEmptyString() {
 		// given
 		BookEntity book = new BookEntity(null, "Java Podstawy","Murat Yener Alex Theedom");
 		// when
 		bookService.saveBook(maper.mapToBookTo(book));
 		List<BookTo> foundAllBooks = bookService.findBooksByAuthor("");
-		List<Long> ids = createIdsList(foundAllBooks);
 		// then
 		assertEquals(0, foundAllBooks.size());
 	}
